@@ -118,8 +118,8 @@ class DiGraph:
         nodeEdges = self.map[node1]
         for edge in nodeEdges:
             if(node2 == edge.node2):
-                return True
-        return False
+                return  edge
+        return  None
     
     def adj(self, node):
         """_summary_

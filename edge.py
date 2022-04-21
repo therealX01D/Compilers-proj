@@ -21,6 +21,9 @@ class Edge:
     def clicked(self):
         return self.curve.clicked()
     
+    def setColor(self, color):
+        self.curve.currentColor = color
+    
 
     
 

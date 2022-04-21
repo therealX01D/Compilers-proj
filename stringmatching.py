@@ -1,8 +1,8 @@
 
 import re                                 # for performing regex expressions
-tokens = []                               # for string tokens
-source_code = 'intresult= 100;'.split() # turning source code into list of words
-inputregex ="542154||!!!!!!!!!8xht8TT99gr<=55154||ysgdd>=45547474&&ysgdd<45547474&&ysgdd>45547474"
+# tokens = []                               # for string tokens
+# source_code = 'intresult= 100;'.split() # turning source code into list of words
+# inputregex ="542154||!!!!!!!!!8xht8TT99gr<=55154||ysgdd>=45547474&&ysgdd<45547474&&ysgdd>45547474"
 # Loop through each source code word
 def stringmatches(inputregex):
     inputregexlist=re.split(r'[|]{2}|&&',inputregex)
@@ -36,7 +36,7 @@ def stringmatches(inputregex):
     return True
     #print(inputregexlist)
     #return 
-    print(tokens) # Outputs the token array
+    # print(tokens) # Outputs the token array
 #class backend():
  #   def __init__(self,inputstr):
  #       self.inputstr=inputstr

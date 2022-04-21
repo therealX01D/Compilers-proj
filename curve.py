@@ -5,7 +5,8 @@ class Curve():
         self.node1 = node1
         self.node2 = node2
         self.mainLine = functions.vector(node1 = self.node1, node2= self.node2)
-        self.color = (0, 0, 0)
+        self.defaultColor = (0, 0, 0)
+        self.currentColor = self.defaultColor
         self.points = []
         self.density = 10
         self.endX = None
@@ -46,7 +47,7 @@ class Curve():
     def show(self):
         self.__initPoints()
         points = self.points
-        stroke(self.color[0], self.color[1], self.color[2])
+        stroke(self.currentColor[0], self.currentColor[1], self.currentColor[2])
         for i in range(len(points)-1):
             currentPoint = points[i]
             nextPoint = points[i+1]
@@ -100,18 +101,18 @@ class Curve():
         firstPoint = self.points[0]
         lastPoint = self.points[-1]
         if(functions.isLineClicked(self.node1.x, self.node1.y, firstPoint.x, firstPoint.y)):
-            self.color = (0, 51, 128)
+            self.currentColor = (0, 51, 128)
             return True
         if(functions.isLineClicked(lastPoint.x, lastPoint.y, self.endX, self.endY)):
-            self.color = (0, 51, 128)
+            self.currentColor = (0, 51, 128)
             return True
         for i in range (len(self.points)-1):
             currentPoint = self.points[i]
             nextPoint = self.points[i+1]
             if(functions.isLineClicked(currentPoint.x, currentPoint.y, nextPoint.x, nextPoint.y)):
-                self.color = (0, 51, 128)
+                self.currentColor = (0, 51, 128)
                 return True
-        self.color = (0,0,0)
+        self.currentColor = self.defaultColor
         return False
     
     def __adjustStartEdge(self):

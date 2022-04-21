@@ -5,6 +5,8 @@ import functions
 import tokenizer
 import stringmatching
 import errorfinder
+import backend
+import States
 add_library('controlP5')
 
 
@@ -12,7 +14,10 @@ mainGraph = graph.DiGraph()
 acceptanceStates = []
 listenForNewWeight = False
 listenForInputString= False
+
 def setup():
+
+
     global outputField
     font = createFont("arial",16)
     global cp5
@@ -82,7 +87,7 @@ def setup():
         
     )
     textAlign(LEFT)
-    textSize(20)
+
 
 
 def draw():
@@ -103,10 +108,13 @@ def draw():
     mainGraph.show()
     showStartEdge()
     fill(255)
+    textSize(20)
+
     text("Special Weights", 1400, 140)   
+
+
     addWeightClicked()
     inputStringClicked()
-    
     
 
         
@@ -194,9 +202,9 @@ def specialWeightsClicked():
         if Id_NumToggle.getValue():
             weights.append("ID/NUM")
         if operatorToggle.getValue():
-            weights.append("Operator")
+            weights.append("OPERATOR")
         if otherToggle.getValue():
-            weights.append("Other")
+            weights.append("OTHER")
         
         mainGraph.selectedEdge.weights = weights[:]
         
@@ -214,9 +222,9 @@ def updateSpecialWeights():
             return
         if "ID/NUM" in edgeWeights:
             Id_NumToggle.setValue(True)
-        if "Operator" in edgeWeights:
+        if "OPERATOR" in edgeWeights:
             operatorToggle.setValue(True)
-        if "Other" in edgeWeights:
+        if "OTHER" in edgeWeights:
             otherToggle.setValue(True)
 
 def addWeightClicked():
@@ -254,8 +262,42 @@ def getInputString():
     tokens = tokenizer.token(inputString)
     tokensString = functions.arrayToString(tokens) 
     outputField.setText(tokensString)   
-    isAccepted = stringmatching.stringmatches(inputString)
+    isAccepted = backend.matches(inputString)
     outputField.append(isAccepted+'\n')
     tokenSeq = errorfinder.sequence(tokens)
-    outputField.append(tokenSeq)
-    
+    outputField.append(tokenSeq + '\n')
+    stateSeq = States.state(inputString)
+    outputField.append(str(stateSeq))
+    getEdges(stateSeq)
+
+def getEdges(stateSequence):
+    if not stateSequence:
+        return
+    edges = []
+    for i in range(len(stateSequence)-1):
+        firstNodeIndex = stateSequence[i] - 1
+        secondNodeIndex = stateSequence[i+1] -1
+        if(secondNodeIndex < 0):
+            break
+        try:
+            firstNode = mainGraph.nodes[firstNodeIndex]
+            secondNode = mainGraph.nodes[secondNodeIndex]
+            connectingEdge = mainGraph.isConnected(firstNode, secondNode)
+            if connectingEdge is None:
+                break
+            edges.append(connectingEdge)
+        except:
+            pass
+         
+    colorPath(edges)
+        
+def colorPath(edges, r=0, g=255, b=0):
+    if not edges:
+        return
+    color = (r, g, b)
+    for iedge in edges:
+        iedge.node1.currentColor = color
+        iedge.setColor(color)
+        
+    lastEdge = edges[-1]
+    lastEdge.node2.currentColor = (235, 146, 52)
