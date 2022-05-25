@@ -44,7 +44,7 @@ def checkinput(inputstring):
     nextstate=None
     currstatenode=node(currstate)
     decforprevnodes={"EXP":currstatenode,"EXP'":NaN,"TERM":NaN, "TERM'":NaN,"FACTOR":NaN,"FACTOR'":NaN,"COMPOP":NaN,"OPERAND":NaN,"id":NaN}
-    occurancesofprevnodes={"EXP":999999,"EXP'":0,"TERM":0, "TERM'":0,"FACTOR":0,"FACTOR'":0,"COMPOP":0,"OPERAND":0,"id":0,"<":0,"||":0,">":0,"!":0,"&&":0}
+    occurancesofprevnodes={"EXP":999999,"EXP'":0,"TERM":0, "TERM'":0,"FACTOR":0,"FACTOR'":0,"COMPOP":0,"OPERAND":0,"id":0,"<":0,"||":0,">":0,"!":0,"&&":0,"=":0}
     listforptree=[]
     listforast=[]
     currast="$"
